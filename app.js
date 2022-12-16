@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 const PORT = 5000;
 
 //creating database connection
-mongoose.set('strictQuery', false);
+mongoose.set("strictQuery", false);
 const connectDB = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/pagination");
@@ -44,10 +44,26 @@ app.post("/", async (req, res) => {
   }
 });
 
-//for fetching posts
+//for fetching posts without pagination
+// app.get("/", async (req, res) => {
+//   try {
+//     const posts = await Post.find();
+//     if (posts) {
+//       return res.status(200).json({ posts });
+//     }
+//     res.status(404).send("posts not found");
+//   } catch (error) {
+//     res.status(500).send("Error fetching posts");
+//   }
+// });
+
+//fetch data with pagination
 app.get("/", async (req, res) => {
   try {
-    const posts = await Post.find();
+    //adding pagaination
+    const limitVal = req.query.limit || 2;
+    const skipVal = req.query.skip || 0;
+    const posts = await Post.find().limit(limitVal).skip(skipVal);
     if (posts) {
       return res.status(200).json({ posts });
     }
