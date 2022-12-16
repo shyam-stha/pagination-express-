@@ -1,9 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 
+//defining PORT
+const PORT = 5000;
+
+//creating database connection
 const connectDB = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/pagination");
+    console.log("Database connected successfully");
   } catch (error) {
     console.log(error);
   }
@@ -11,9 +16,11 @@ const connectDB = async () => {
 
 const app = express();
 
+//using express parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+//defining Schema for post
 const postSchema = new mongoose.Schema({
   name: String,
   date: {
@@ -22,8 +29,10 @@ const postSchema = new mongoose.Schema({
   },
 });
 
+//creating mongoose model
 const Post = new mongoose.model("Post", postSchema);
 
+// for creating posts
 app.post("/", async (req, res) => {
   try {
     const post = new Post(req.body);
@@ -34,6 +43,7 @@ app.post("/", async (req, res) => {
   }
 });
 
+//for fetching posts
 app.get("/", async (req, res) => {
   try {
     const posts = await Post.find();
@@ -44,4 +54,9 @@ app.get("/", async (req, res) => {
   } catch (error) {
     res.status(500).send("Error fetching posts");
   }
+});
+
+app.listen(PORT, async () => {
+  console.log("Server running on port", PORT);
+  await connectDB();
 });
