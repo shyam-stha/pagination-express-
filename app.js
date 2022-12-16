@@ -45,9 +45,25 @@ app.post("/", async (req, res) => {
 });
 
 //for fetching posts without pagination
+app.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find();
+    if (posts) {
+      return res.status(200).json({ posts });
+    }
+    res.status(404).send("posts not found");
+  } catch (error) {
+    res.status(500).send("Error fetching posts");
+  }
+});
+
+//fetch data with pagination
 // app.get("/", async (req, res) => {
 //   try {
-//     const posts = await Post.find();
+    //adding pagaination method 1 using skip and limit
+//     const limitVal = req.query.limit || 2;
+//     const skipVal = req.query.skip || 0;
+//     const posts = await Post.find().limit(limitVal).skip(skipVal);
 //     if (posts) {
 //       return res.status(200).json({ posts });
 //     }
@@ -57,21 +73,20 @@ app.post("/", async (req, res) => {
 //   }
 // });
 
+
 //fetch data with pagination
-app.get("/", async (req, res) => {
-  try {
-    //adding pagaination
-    const limitVal = req.query.limit || 2;
-    const skipVal = req.query.skip || 0;
-    const posts = await Post.find().limit(limitVal).skip(skipVal);
-    if (posts) {
-      return res.status(200).json({ posts });
-    }
-    res.status(404).send("posts not found");
-  } catch (error) {
-    res.status(500).send("Error fetching posts");
-  }
-});
+// app.get("/", async (req, res) => {
+//     try {
+//       //adding pagaination method 1 using skip and limit
+//       const posts = await Post.find().sort({ _id : -1}).limit(2).skip(4);
+//       if (posts) {
+//         return res.status(200).json({ posts });
+//       }
+//       res.status(404).send("posts not found");
+//     } catch (error) {
+//       res.status(500).send("Error fetching posts");
+//     }
+//   });
 
 //listening to the server port 5000
 app.listen(PORT, async () => {
