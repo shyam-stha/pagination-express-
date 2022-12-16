@@ -33,3 +33,15 @@ app.post("/", async (req, res) => {
     res.status(500).send("Error creating post");
   }
 });
+
+app.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find();
+    if (posts) {
+      return res.status(200).json({ posts });
+    }
+    res.status(404).send("posts not found");
+  } catch (error) {
+    res.status(500).send("Error fetching posts");
+  }
+});
