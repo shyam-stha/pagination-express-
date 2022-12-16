@@ -1,0 +1,17 @@
+{
+  "name": "pagination-express-",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/shyam-stha/pagination-express-.git",
+  "author": "Shyam Stha <sthask2019@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0",
+    "nodemon": "^2.0.20"
+  }
+}
