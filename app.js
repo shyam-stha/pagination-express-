@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 const PORT = 5000;
 
 //creating database connection
+mongoose.set('strictQuery', false);
 const connectDB = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/pagination");
@@ -56,6 +57,7 @@ app.get("/", async (req, res) => {
   }
 });
 
+//listening to the server port 5000
 app.listen(PORT, async () => {
   console.log("Server running on port", PORT);
   await connectDB();
