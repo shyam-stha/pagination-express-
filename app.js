@@ -28,7 +28,7 @@ app.post("/", async (req, res) => {
   try {
     const post = new Post(req.body);
     await post.save();
-    res.status(201).send("Scuccessfully created");
+    res.status(201).send("Post scuccessfully created");
   } catch (error) {
     res.status(500).send("Error creating post");
   }
